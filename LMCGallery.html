@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="icon" href="bgTrojans.png" type="image/x-icon">
+    <link rel="stylesheet" href="lightbox.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'poppins', sans-serif;
+        }
+
+        .container {
+            background-image: linear-gradient(rgba(4,9,30,0.8),rgba(4,9,30,0.8)), url(2.jpg);
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 8%;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(650px, 1fr));
+            grid-gap: 50px;
+        }
+
+        .gallery img {
+            width: 100%;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="gallery">
+        <a href="Lux1.jpg" data-lightbox="models" data-title="Pic1"><img src="Lux1.jpg" alt=""></a>
+        <a href="Lux2.jpg" data-lightbox="models" data-title="pic2"><img src="Lux2.jpg" alt=""></a>
+        <a href="Lux3.jpg" data-lightbox="models" data-title="pic3"><img src="Lux3.jpg" alt=""></a>
+        <a href="Lux4.jpg" data-lightbox="models" data-title="pic4"><img src="Lux4.jpg" alt=""></a>
+        <a href="Lux5.jpg" data-lightbox="models" data-title="pic5"><img src="Lux5.jpg" alt=""></a>
+        <a href="Lux6.jpg" data-lightbox="models" data-title="pic6"><img src="Lux6.jpg" alt=""></a>
+        <a href="Lux7.jpg" data-lightbox="models" data-title="pic7"><img src="Lux7.jpg" alt=""></a>
+        <video src="sayaw.mp4" autoplay controls loop muted></video>
+        <video src="Wes.mp4" autoplay controls loop muted></video>
+        <video src="gym.mp4" autoplay controls loop muted></video>
+    </div>
+    </div>
+    <script src="lightbox-plus-jquery.js"></script>
+</body>
+</html>

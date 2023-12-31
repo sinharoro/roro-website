@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            * {
+                margin: 10;
+                padding: 0;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            }
+            body {
+                background-color: white;
+                background-size: 200px;
+                position: center;
+                transition: .1s ease-in-out;
+            }
+            
+            .formbg {
+                display: block;
+                width: 250px;
+                height: 210px;
+                position: relative;
+                background-color: white;
+                padding: 20px;
+                border-radius: 12px;
+                border: double 3px grey; 
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 8%;
+            }
+            .remfor a {
+                text-decoration: none;
+            }
+            .remfor a:hover {
+                text-decoration: underline;
+            }
+            .reg {
+                text-align: center;
+            }
+            input {
+                margin: 3px;
+            }
+            button {
+                margin: 3px;
+                font-weight: bold;
+            }
+            .switch {
+                background: black;
+                color: black;
+                transition: .1s ease-in-out;
+            }
+            .check {
+                cursor: pointer;
+                position: relative;
+                margin: auto;
+                width: 18px;
+                height: 18px;
+                -webkit-tap-highlight-color: transparent;
+                transform: translate3d(0, 0, 0);
+            }
+            .check:before {
+                content: "";
+                position: absolute;
+                top: -15px;
+                left: -15px;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background: rgba(34,50,84,0.03);
+                opacity: 0;
+                transition: opacity 0.2s ease;
+            }
+            .check svg {
+                position: relative;
+                z-index: 1;
+                fill: none;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                stroke: #c8ccd4;
+                stroke-width: 1.5;
+                transform: translate3d(0, 0, 0);
+                transition: all 0.2s ease;
+            }
+            .check svg path {
+                stroke-dasharray: 60;
+                stroke-dashoffset: 0;
+            }
+            .check svg polyline {
+                stroke-dasharray: 22;
+                stroke-dashoffset: 66;
+            }
+            .check:hover:before {
+                opacity: 1;
+            }
+            .check:hover svg {
+                stroke: #4285f4;
+            }
+            #cbx:checked + .check svg {
+                stroke: #4285f4;
+            }
+            #cbx:checked + .check svg path {
+                stroke-dashoffset: 60;
+                transition: all 0.3s linear;
+            }
+            #cbx:checked + .check svg polyline {
+                stroke-dashoffset: 42;
+                transition: all 0.2s linear;
+                transition-delay: 0.15s;
+            }
+            .contain input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+            .contain {
+                display: block;
+                position: relative;
+                cursor: pointer;
+                font-size: 25px;
+                user-select: none;
+            }
+            .checkmark {
+                position: relative;
+                top: 0;
+                left: 0;
+                height: 1.3em;
+                width: 1.3em;
+                background: black;
+                border-radius: 50px;
+                transition: all 0.7s;
+                --spread: 20px;
+            }
+            .contain input:checked ~ .checkmark {
+                background: black;
+                box-shadow: -10px -10px var(--spread) 0px #5B51D8, 0 -10px var(--spread) 0px #833AB4, 10px -10px var(--spread) 0px #E1306C, 10px 0 var(--spread) 0px #FD1D1D, 10px 10px var(--spread) 0px #F77737, 0 10px var(--spread) 0px #FCAF45, -10px 10px var(--spread) 0px #FFDC80;
+            }
+            .checkmark:after {
+                content: "";
+                position: absolute;
+                display: none;
+            }
+            .contain input:checked ~ .checkmark:after {
+                display: block;
+            }
+            .contain .checkmark:after {
+                left: 0.45em;
+                top: 0.25em;
+                width: 0.25em;
+                height: 0.5em;
+                border: solid #f0f0f0;
+                border-width: 0 0.15em 0.15em 0;
+                transform: rotate(45deg);
+            }.loader {
+  width: 48px;
+  height: 48px;
+  margin: auto;
+  position: relative;
+}
+
+.loader:before {
+  content: '';
+  width: 48px;
+  height: 5px;
+  background: #f0808050;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  border-radius: 50%;
+  animation: shadow324 0.5s linear infinite;
+}
+
+.loader:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background: #f08080;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 4px;
+  animation: jump7456 0.5s linear infinite;
+}
+
+@keyframes jump7456 {
+  15% {
+    border-bottom-right-radius: 3px;
+  }
+
+  25% {
+    transform: translateY(9px) rotate(22.5deg);
+  }
+
+  50% {
+    transform: translateY(18px) scale(1, .9) rotate(45deg);
+    border-bottom-right-radius: 40px;
+  }
+
+  75% {
+    transform: translateY(9px) rotate(67.5deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(90deg);
+  }
+}
+
+@keyframes shadow324 {
+
+  0%,
+    100% {
+    transform: scale(1, 1);
+  }
+
+  50% {
+    transform: scale(1.2, 1);
+  }
+}
+.loadingspinner {
+  --square: 26px;
+  --offset: 30px;
+  --duration: 2.4s;
+  --delay: 0.2s;
+  --timing-function: ease-in-out;
+  --in-duration: 0.4s;
+  --in-delay: 0.1s;
+  --in-timing-function: ease-out;
+  width: calc( 3 * var(--offset) + var(--square));
+  height: calc( 2 * var(--offset) + var(--square));
+  padding: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.loadingspinner div {
+  display: inline-block;
+  background: darkorange;
+  border: none;
+  border-radius: 2px;
+  width: var(--square);
+  height: var(--square);
+  position: absolute;
+  padding: 0px;
+  margin: 0px;
+  font-size: 6pt;
+  color: black;
+}
+
+.loadingspinner #square1 {
+  left: calc( 0 * var(--offset) );
+  top: calc( 0 * var(--offset) );
+  animation: square1 var(--duration) var(--delay) var(--timing-function) infinite,
+               squarefadein var(--in-duration) calc(1 * var(--in-delay)) var(--in-timing-function) both;
+}
+
+.loadingspinner #square2 {
+  left: calc( 0 * var(--offset) );
+  top: calc( 1 * var(--offset) );
+  animation: square2 var(--duration) var(--delay) var(--timing-function) infinite,
+              squarefadein var(--in-duration) calc(1 * var(--in-delay)) var(--in-timing-function) both;
+}
+
+.loadingspinner #square3 {
+  left: calc( 1 * var(--offset) );
+  top: calc( 1 * var(--offset) );
+  animation: square3 var(--duration) var(--delay) var(--timing-function) infinite,
+               squarefadein var(--in-duration) calc(2 * var(--in-delay)) var(--in-timing-function) both;
+}
+
+.loadingspinner #square4 {
+  left: calc( 2 * var(--offset) );
+  top: calc( 1 * var(--offset) );
+  animation: square4 var(--duration) var(--delay) var(--timing-function) infinite,
+               squarefadein var(--in-duration) calc(3 * var(--in-delay)) var(--in-timing-function) both;
+}
+
+.loadingspinner #square5 {
+  left: calc( 3 * var(--offset) );
+  top: calc( 1 * var(--offset) );
+  animation: square5 var(--duration) var(--delay) var(--timing-function) infinite,
+               squarefadein var(--in-duration) calc(4 * var(--in-delay)) var(--in-timing-function) both;
+}
+
+@keyframes square1 {
+  0% {
+    left: calc( 0 * var(--offset) );
+    top: calc( 0 * var(--offset) );
+  }
+
+  8.333% {
+    left: calc( 0 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  100% {
+    left: calc( 0 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+}
+
+@keyframes square2 {
+  0% {
+    left: calc( 0 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  8.333% {
+    left: calc( 0 * var(--offset) );
+    top: calc( 2 * var(--offset) );
+  }
+
+  16.67% {
+    left: calc( 1 * var(--offset) );
+    top: calc( 2 * var(--offset) );
+  }
+
+  25.00% {
+    left: calc( 1 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  83.33% {
+    left: calc( 1 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  91.67% {
+    left: calc( 1 * var(--offset) );
+    top: calc( 0 * var(--offset) );
+  }
+
+  100% {
+    left: calc( 0 * var(--offset) );
+    top: calc( 0 * var(--offset) );
+  }
+}
+
+@keyframes square3 {
+  0%,100% {
+    left: calc( 1 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  16.67% {
+    left: calc( 1 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  25.00% {
+    left: calc( 1 * var(--offset) );
+    top: calc( 0 * var(--offset) );
+  }
+
+  33.33% {
+    left: calc( 2 * var(--offset) );
+    top: calc( 0 * var(--offset) );
+  }
+
+  41.67% {
+    left: calc( 2 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  66.67% {
+    left: calc( 2 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  75.00% {
+    left: calc( 2 * var(--offset) );
+    top: calc( 2 * var(--offset) );
+  }
+
+  83.33% {
+    left: calc( 1 * var(--offset) );
+    top: calc( 2 * var(--offset) );
+  }
+
+  91.67% {
+    left: calc( 1 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+}
+
+@keyframes square4 {
+  0% {
+    left: calc( 2 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  33.33% {
+    left: calc( 2 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  41.67% {
+    left: calc( 2 * var(--offset) );
+    top: calc( 2 * var(--offset) );
+  }
+
+  50.00% {
+    left: calc( 3 * var(--offset) );
+    top: calc( 2 * var(--offset) );
+  }
+
+  58.33% {
+    left: calc( 3 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  100% {
+    left: calc( 3 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+}
+
+@keyframes square5 {
+  0% {
+    left: calc( 3 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  50.00% {
+    left: calc( 3 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  58.33% {
+    left: calc( 3 * var(--offset) );
+    top: calc( 0 * var(--offset) );
+  }
+
+  66.67% {
+    left: calc( 2 * var(--offset) );
+    top: calc( 0 * var(--offset) );
+  }
+
+  75.00% {
+    left: calc( 2 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+
+  100% {
+    left: calc( 2 * var(--offset) );
+    top: calc( 1 * var(--offset) );
+  }
+}
+
+@keyframes squarefadein {
+  0% {
+    transform: scale(0.75);
+    opacity: 0.0;
+  }
+
+  100% {
+    transform: scale(1.0);
+    opacity: 1.0;
+  }
+}
+
+
+        </style>
+        <title>LogIn Page</title>
+        <link rel="icon" href="1.gif" type="image/x-icon">
+    </head>
+    <body>
+        <div class="loader"></div>
+        <label class="contain">
+            <input type="checkbox" checked="checked" onclick="darkmode()">
+            <div class="checkmark"></div>
+        </label>
+             <div class="formbg">
+                <div id="click"></div>
+                <form id="Login" action="RoroSnap.html" method="post">
+                    <h1><center>Login</center></h1>
+                    <div class="ibox">
+                    <input type="email" name="" spellcheck="false" id="emailemail" placeholder="Username" required>
+                    </div>
+                    <div class="ibox">
+                    <input type="password" name="" id="password" placeholder="Password" required>
+                    </div>
+                    <div class="remfor"><div class="container">
+                        <input type="checkbox" id="cbx" style="display: none;">
+                        <label for="cbx" class="check">
+                            <svg width="18px" height="18px" viewBox="0 0 18 18">
+                                <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                                <polyline points="1 9 7 14 15 4"></polyline>
+                            </svg>
+                        </label>
+                    Remember me&nbsp&nbsp
+                    <a href="">Forgot password?</a>
+                </div>
+                    </div>
+                    <button type="submit" onclick="LogIn()">Login</button>  
+                    <div class="reg">
+                        <p>Don't have an account?&nbsp&nbsp<a href="">Register</a></p>                    
+                    </div>
+                </form>
+            </div>
+                   <br><br><br>
+<div style="margin-left: 10%;" class="loadingspinner">
+    <div id="square1"></div>
+    <div id="square2"></div>
+    <div id="square3"></div>
+    <div id="square4"></div>
+    <div id="square5"></div>
+  </div>
+  
+  <script>
+		function LogIn() {
+			var emailemail = document.getElementById("emailemail").value;
+			var password = document.getElementById("password").value;
+			if (email=="Sinharoro@gmail.com" && password=="121212") {
+				alert("Login Successfully");
+        window.location.assign("RoroSnap.html");
+			}
+			else
+			{
+				alert("Invalid Information");
+				return;
+			}
+		}
+	</script> 
+            <script>
+                function darkmode(){
+                    let theme = document.body;
+                    theme.classList.toggle('switch');
+                }
+            </script>
+    </body>
+</html>
